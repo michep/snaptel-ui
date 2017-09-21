@@ -1,0 +1,14 @@
+{
+  "snaptel_servers" : {
+    "asd" : {
+      "host" : "asd",
+      "port" : 45456456,
+      "proto" : "xczccxzc"
+    },
+    "mdb_mfms" : {
+      "host" : "mdb.mfms",
+      "port" : 8181,
+      "proto" : "http"
+    }
+  }
+}

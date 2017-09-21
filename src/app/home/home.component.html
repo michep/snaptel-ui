@@ -1,0 +1,11 @@
+<p>
+  home works!
+</p>
+<ul>
+  <li class="text" *ngFor="let item of items | async">
+    {{ item.$key }}
+  </li>
+</ul>
+<button (click)="click()">
+  click me
+</button>
