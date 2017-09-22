@@ -3,10 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ServerlistComponent } from './serverlist/serverlist.component';
 import { ServereditComponent } from './serveredit/serveredit.component';
+import { ServerinfoComponent } from './serverinfo/serverinfo.component';
 
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: '/servers'
+  },
+  {
+    path: 'home',
     component: HomeComponent
   },
   {
@@ -14,7 +20,15 @@ const routes: Routes = [
     component: ServerlistComponent
   },
   {
+    path: 'servers/new',
+    component: ServereditComponent
+  },
+  {
     path: 'servers/:servername',
+    component: ServerinfoComponent
+  },
+  {
+    path: 'servers/:servername/edit',
     component: ServereditComponent
   }
 ];

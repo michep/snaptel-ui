@@ -1,19 +1,17 @@
-<p>
-  serverlist works!
-</p>
-<table style="width: 100%">
+<table>
   <tr>
-    <th style="width: 33%">Protocol</th>
-    <th style="width: 33%">Hostname</th>
-    <th style="width: 33%">Port</th>
+    <th>Protocol</th>
+    <th>Hostname</th>
+    <th>Port</th>
     <th>Edit</th>
     <th>Details</th>
   </tr>
-  <tr *ngFor="let server of servers" [style.background-color]="getBGColor(server)">
+  <tr *ngFor="let server of servers" [style.background-color]="server.available ? 'PaleGreen' : 'LightPink'">
     <td>{{ server.proto }}</td>
     <td>{{ server.host }}</td>
     <td>{{ server.port }}</td>
-    <td><button (click)="clickEdit(server)">Edit</button></td>
-    <td><button (click)="clickOpen(server)">Open Details</button></td>
+    <td><button [routerLink]="['.', server.key, 'edit']">Edit</button></td>
+    <td><button [routerLink]="['.', server.key]" [disabled]="!server.available">Open Details</button></td>
   </tr>
 </table>
+<button [routerLink]="['.', 'new']">Add server</button>

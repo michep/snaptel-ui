@@ -19,26 +19,35 @@ export class ServerlistService {
   constructor(private http: Http, private db: AngularFireDatabase) {
   }
 
-  getServerList(): Observable<SnapServer> {
+  getServer(key: string): Observable<SnapServer> {
+    return this.db.object(this.snapServersKey + '/' + key)
+    .map(item => {
+      const server: SnapServer = <SnapServer>item;
+      server.key = item['$key'];
+      return server;
+    });
+  }
+
+  getServerListWithAvailability(): Observable<SnapServer> {
     return this.db.list(this.snapServersKey)
-      .concatMap(items => {
-        return Observable.from(items)
-          .map(item => {
-            const server: SnapServer = <SnapServer>item;
-            server.key = item['$key'];
-            this.http.get(server.proto + '://' + server.host + ':' + server.port + '/v2/tasks')
-              .timeout(250)
-              .subscribe(
-                () => {
-                  server.available = true;
-                },
-                () => {
-                  server.available = false;
-                }
-              );
-            return server;
-          });
+    .concatMap(items => {
+      return Observable.from(items)
+      .map(item => {
+        const server: SnapServer = <SnapServer>item;
+        server.key = item['$key'];
+        this.http.get(server.proto + '://' + server.host + ':' + server.port + '/v2/tasks')
+        .timeout(250)
+        .subscribe(
+          (res) => {
+            server.available = true;
+          },
+          (err) => {
+            server.available = false;
+          }
+        );
+        return server;
       });
+    });
   }
 
 }

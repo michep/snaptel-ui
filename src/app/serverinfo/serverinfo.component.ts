@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-serverinfo',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ServerinfoComponent implements OnInit {
 
-  constructor() { }
+  private servername: string;
+
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.servername = activatedRoute.snapshot.params['servername'];
+  }
 
   ngOnInit() {
   }

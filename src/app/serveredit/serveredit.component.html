@@ -1,3 +1,18 @@
-<p>
-  serveredit works!
-</p>
+<form [formGroup]="form" (ngSubmit)="saveServer(server)">
+  <fieldset>
+    <legend>Server</legend>
+    <div>
+      <label for="proto">Protocol</label>
+      <input id="proto" type="text" formControlName="proto" [(ngModel)]="server.proto">
+    </div>
+    <div>
+      <label for="hostname">Hostname</label>
+      <input id="hostname" type="text" formControlName="hostname" [(ngModel)]="server.host">
+    </div>
+    <div>
+      <label for="port">Port</label>
+      <input id="port" type="text" formControlName="port" [(ngModel)]="server.port">
+    </div>
+    <button type="submit" [disabled]="form.invalid">Save</button>
+  </fieldset>
+</form>

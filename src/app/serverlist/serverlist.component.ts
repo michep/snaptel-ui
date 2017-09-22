@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 
@@ -14,27 +16,27 @@ export class ServerlistComponent implements OnInit {
 
   private servers: SnapServer[] = [];
 
-  constructor(private serversService: ServerlistService) {
+  constructor(private serversService: ServerlistService,private router: Router) {
   }
 
   ngOnInit() {
-    this.serversService.getServerList()
+    this.serversService.getServerListWithAvailability()
       .subscribe(server => this.servers.push(server));
   }
 
   private clickOpen(server: SnapServer) {
-    console.log('open', server);
+    this.router.navigate(['servers', server.key]);
   }
 
   private clickEdit(server: SnapServer) {
-    console.log('edit', server);
+    this.router.navigate(['servers', server.key, 'edit']);
   }
 
-  private getBGColor(server: SnapServer): string {
-    if (server.available) {
-      return 'PaleGreen';
-    } else {
-      return 'LightPink';
-    }
-  }
+  // private getBGColor(server: SnapServer): string {
+  //   if (server.available) {
+  //     return 'PaleGreen';
+  //   } else {
+  //     return 'LightPink';
+  //   }
+  // }
 }
