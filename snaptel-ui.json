@@ -1,11 +1,11 @@
 {
   "snaptel_servers" : {
-    "asd" : {
-      "host" : "asd",
-      "port" : 45456456,
-      "proto" : "xczccxzc"
+    "38ae730c-6bf0-4f73-88f3-ffdb1dceb2c9" : {
+      "host" : "mda.mfms",
+      "port" : 8181,
+      "proto" : "http"
     },
-    "mdb_mfms" : {
+    "5947a578-2902-dce4-aba0-ead430b2b5bc" : {
       "host" : "mdb.mfms",
       "port" : 8181,
       "proto" : "http"

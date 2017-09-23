@@ -11,7 +11,7 @@
     </div>
     <div>
       <label for="port">Port</label>
-      <input id="port" type="text" formControlName="port" [(ngModel)]="server.port">
+      <input id="port" type="number" formControlName="port" [(ngModel)]="server.port">
     </div>
     <button type="submit" [disabled]="form.invalid">Save</button>
   </fieldset>

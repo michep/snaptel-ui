@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-import { ServerlistService} from '../services/serverlist.service';
-import { SnapServer } from '../types/snap';
+import { ServerlistService} from '../shared/serverlist.service';
+import { SnapServer } from '../shared/snap';
 
 @Component({
   selector: 'app-serveredit',
@@ -16,8 +16,14 @@ export class ServereditComponent implements OnInit {
   private servername: string;
   private state: string;
   private server: SnapServer;
+  private oldserver: SnapServer;
 
-  constructor(private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder, private serversService: ServerlistService) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private serversService: ServerlistService
+  ) {
     this.server = <SnapServer>{};
     const snapshot = activatedRoute.snapshot;
     if (snapshot.url[snapshot.url.length - 1].path === 'new') {
@@ -28,6 +34,7 @@ export class ServereditComponent implements OnInit {
       serversService.getServer(this.servername)
       .subscribe(server => {
         this.server = server;
+        this.oldserver = {proto: server.proto, host: server.host, port: server.port, key: server.key, available: null};
       });
     }
   }
@@ -41,7 +48,12 @@ export class ServereditComponent implements OnInit {
   }
 
   private saveServer(server: SnapServer) {
-    console.log(this.state, server);
+    if (this.state === 'new') {
+      this.serversService.newServer(server);
+    } else {
+      this.serversService.updateServer(this.oldserver, server);
+    }
+    this.router.navigate(['servers']);
   }
 
 }

@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/timeout';
 
-import { ServerlistService} from '../services/serverlist.service';
-import { SnapServer } from '../types/snap';
+import { ServerlistService } from '../shared/serverlist.service';
+import { SnapRestV2Service } from '../shared/snap-rest-v2.service';
+import { SnapServer } from '../shared/snap';
 
 @Component({
   selector: 'app-serverlist',
@@ -16,27 +19,39 @@ export class ServerlistComponent implements OnInit {
 
   private servers: SnapServer[] = [];
 
-  constructor(private serversService: ServerlistService,private router: Router) {
-  }
+  constructor(
+    private router: Router,
+    private http: Http,
+    private serverlistService: ServerlistService,
+    private snapService: SnapRestV2Service
+  ) { }
 
   ngOnInit() {
-    this.serversService.getServerListWithAvailability()
-      .subscribe(server => this.servers.push(server));
+    this.serverlistService.getServerList()
+      .subscribe(servers => {
+        this.servers = servers;
+        Observable.from(this.servers)
+          .map(item => {
+            const server: SnapServer = <SnapServer>item;
+            server.key = item['$key'];
+            this.snapService.getTaskList(server)
+              .timeout(250)
+              .subscribe(
+                (res) => {
+                  server.available = true;
+                },
+                (err) => {
+                  server.available = false;
+                }
+              );
+            return server;
+          })
+          .subscribe();
+      });
   }
 
-  private clickOpen(server: SnapServer) {
-    this.router.navigate(['servers', server.key]);
+  private deleteServer(server: SnapServer) {
+    this.serverlistService.removeServer(server);
   }
 
-  private clickEdit(server: SnapServer) {
-    this.router.navigate(['servers', server.key, 'edit']);
-  }
-
-  // private getBGColor(server: SnapServer): string {
-  //   if (server.available) {
-  //     return 'PaleGreen';
-  //   } else {
-  //     return 'LightPink';
-  //   }
-  // }
 }

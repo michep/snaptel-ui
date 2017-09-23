@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ServerlistComponent } from './serverlist/serverlist.component';
 import { ServereditComponent } from './serveredit/serveredit.component';
-import { ServerinfoComponent } from './serverinfo/serverinfo.component';
+import { TasklistComponent } from './tasklist/tasklist.component';
 
 const routes: Routes = [
   {
@@ -24,8 +24,8 @@ const routes: Routes = [
     component: ServereditComponent
   },
   {
-    path: 'servers/:servername',
-    component: ServerinfoComponent
+    path: 'servers/:servername/tasks',
+    component: TasklistComponent
   },
   {
     path: 'servers/:servername/edit',

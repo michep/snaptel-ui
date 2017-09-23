@@ -18,9 +18,9 @@ export interface SnapTaskInfo extends SnapTask {
 }
 
 export interface SnapServer {
-  key: string;
+  key?: string;
   host: string;
   port: number;
   proto: string;
-  available: boolean;
+  available?: boolean;
 }

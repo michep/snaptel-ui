@@ -12,19 +12,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ServerlistComponent } from './serverlist/serverlist.component';
-import { ServerinfoComponent } from './serverinfo/serverinfo.component';
+import { ServereditComponent } from './serveredit/serveredit.component';
 import { TasklistComponent } from './tasklist/tasklist.component';
 import { TaskinfoComponent } from './taskinfo/taskinfo.component';
 
-import { ServerlistService } from './services/serverlist.service';
-import { ServereditComponent } from './serveredit/serveredit.component';
+import { ServerlistService } from './shared/serverlist.service';
+import { SnapRestV2Service } from './shared/snap-rest-v2.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ServerlistComponent,
-    ServerinfoComponent,
     TasklistComponent,
     TaskinfoComponent,
     ServereditComponent
@@ -39,7 +38,8 @@ import { ServereditComponent } from './serveredit/serveredit.component';
     AppRoutingModule
   ],
   providers: [
-    ServerlistService
+    ServerlistService,
+    SnapRestV2Service
   ],
   bootstrap: [AppComponent]
 })

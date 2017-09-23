@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { SnapTaskInfo } from '../types/snap';
+import { SnapTaskInfo } from '../shared/snap';
 
 @Component({
   selector: 'app-home',
