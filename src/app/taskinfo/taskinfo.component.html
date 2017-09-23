@@ -1,3 +1,50 @@
-<p>
-  taskinfo works!
-</p>
+<table>
+  <tr>
+    <td>Id</td>
+    <td>{{ taskInfo.id }}</td>
+  </tr>
+  <tr>
+    <td>Created</td>
+    <td>{{ util.getDateString(taskInfo.creation_timestamp) }}</td>
+  </tr>
+  <tr>
+    <td>Schedule type</td>
+    <td>{{ taskInfo.schedule?.type }}</td>
+  </tr>
+  <tr>
+    <td>Schedule interval</td>
+    <td>{{ taskInfo.schedule?.interval }}</td>
+  </tr>
+  <tr>
+    <td>Deadline</td>
+    <td>{{ taskInfo.deadline }}</td>
+  </tr>
+  <tr>
+    <td>State</td>
+    <td>{{ taskInfo.task_state }}</td>
+  </tr>
+  <tr>
+    <td>Metrics</td>
+    <td>
+      <div *ngFor="let metric of metrics">
+        {{ metric }}
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>Last run time</td>
+    <td>{{ util.getDateString(taskInfo.last_run_timestamp) }}</td>
+  </tr>
+  <tr>
+    <td>Hit count</td>
+    <td>{{ taskInfo.hit_count }}</td>
+  </tr>
+  <tr>
+    <td>Miss count</td>
+    <td>{{ taskInfo.miss_count }}</td>
+  </tr>
+  <tr>
+    <td>Fail count</td>
+    <td>{{ taskInfo.failed_count }}</td>
+  </tr>
+</table>

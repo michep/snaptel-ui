@@ -4,18 +4,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SnapRestV2Service } from '../shared/snap-rest-v2.service';
 import { ServerlistService } from '../shared/serverlist.service';
 import { Util } from '../shared/util';
-import { SnapServer, SnapTaskInfo } from '../shared/snap';
+import { SnapServer, SnapMetric } from '../shared/snap';
 
 @Component({
-  selector: 'app-taskinfo',
-  templateUrl: './taskinfo.component.html',
-  styleUrls: ['./taskinfo.component.css']
+  selector: 'app-metriclist',
+  templateUrl: './metriclist.component.html',
+  styleUrls: ['./metriclist.component.css']
 })
-export class TaskinfoComponent implements OnInit {
+export class MetriclistComponent implements OnInit {
 
   private server: SnapServer = <SnapServer>{};
-  private taskInfo: SnapTaskInfo = <SnapTaskInfo>{};
-  private metrics: string[] = [];
+  private serverMetrics: SnapMetric[] = [];
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,11 +30,10 @@ export class TaskinfoComponent implements OnInit {
       .subscribe(
         (server) => {
           this.server = server;
-          this.snapService.getTaskInfo(server, this.activatedRoute.snapshot.params['taskid'])
+          this.snapService.getMetricList(this.server)
             .subscribe(
               (res) => {
-                this.taskInfo = res.json();
-                this.metrics = Object.keys(this.taskInfo.workflow.collect.metrics);
+                this.serverMetrics = res.json()['metrics'];
               }
             );
         }

@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Version</th>
+    <th>Loaded time</th>
+  </tr>
+  <tr *ngFor="let plugin of serverPlugins">
+    <td>{{ plugin.name }}</td>
+    <td>{{ plugin.type }}</td>
+    <td>{{ plugin.version }}</td>
+    <td>{{ util.getDateString(plugin.loaded_timestamp) }}</td>
+  </tr>
+</table>

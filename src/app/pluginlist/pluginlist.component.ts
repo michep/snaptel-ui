@@ -4,18 +4,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SnapRestV2Service } from '../shared/snap-rest-v2.service';
 import { ServerlistService } from '../shared/serverlist.service';
 import { Util } from '../shared/util';
-import { SnapServer, SnapTaskInfo } from '../shared/snap';
+import { SnapServer, SnapPlugin } from '../shared/snap';
 
 @Component({
-  selector: 'app-taskinfo',
-  templateUrl: './taskinfo.component.html',
-  styleUrls: ['./taskinfo.component.css']
+  selector: 'app-pluginlist',
+  templateUrl: './pluginlist.component.html',
+  styleUrls: ['./pluginlist.component.css']
 })
-export class TaskinfoComponent implements OnInit {
+export class PluginlistComponent implements OnInit {
 
   private server: SnapServer = <SnapServer>{};
-  private taskInfo: SnapTaskInfo = <SnapTaskInfo>{};
-  private metrics: string[] = [];
+  private serverPlugins: SnapPlugin[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,11 +29,10 @@ export class TaskinfoComponent implements OnInit {
       .subscribe(
         (server) => {
           this.server = server;
-          this.snapService.getTaskInfo(server, this.activatedRoute.snapshot.params['taskid'])
+          this.snapService.getPluginList(this.server)
             .subscribe(
               (res) => {
-                this.taskInfo = res.json();
-                this.metrics = Object.keys(this.taskInfo.workflow.collect.metrics);
+                this.serverPlugins = res.json()['plugins'];
               }
             );
         }

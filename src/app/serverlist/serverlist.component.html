@@ -1,19 +1,33 @@
-<table>
-  <tr>
-    <th>Protocol</th>
-    <th>Hostname</th>
-    <th>Port</th>
-    <th>Tasks</th>
-    <th>Edit</th>
-    <th>Remove</th>
-  </tr>
-  <tr *ngFor="let server of servers" [style.background-color]="server.available ? 'PaleGreen' : 'LightPink'">
-    <td>{{ server.proto }}</td>
-    <td>{{ server.host }}</td>
-    <td>{{ server.port }}</td>
-    <td><button [routerLink]="['.', server.key, 'tasks']" [disabled]="!server.available">Tasks</button></td>
-    <td><button [routerLink]="['.', server.key, 'edit']">Edit</button></td>
-    <td><button (click)="deleteServer(server)">Remove</button></td>
-  </tr>
-</table>
-<button [routerLink]="['.', 'new']">Add server</button>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>Hostname</th>
+            <th>Port</th>
+            <th>Plugins</th>
+            <th>Metrics</th>
+            <th>Tasks</th>
+            <th>Edit</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let server of servers" [style.background-color]="server.available ? 'PaleGreen' : 'LightPink'">
+            <td>{{ server.proto }}</td>
+            <td>{{ server.host }}</td>
+            <td>{{ server.port }}</td>
+            <td><button [routerLink]="[server.key, 'plugins']" [disabled]="!server.available">Plugins</button></td>
+            <td><button [routerLink]="[server.key, 'metrics']" [disabled]="!server.available">Metrics</button></td>
+            <td><button [routerLink]="[server.key, 'tasks']" [disabled]="!server.available">Tasks</button></td>
+            <td><button [routerLink]="[server.key, 'edit']">Edit</button></td>
+            <td><button (click)="deleteServer(server)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button [routerLink]="['.', 'new']">Add server</button>
+    </div>
+  </div>
+</div>

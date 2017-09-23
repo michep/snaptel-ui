@@ -10,23 +10,27 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+
 import { ServerlistComponent } from './serverlist/serverlist.component';
 import { ServereditComponent } from './serveredit/serveredit.component';
 import { TasklistComponent } from './tasklist/tasklist.component';
 import { TaskinfoComponent } from './taskinfo/taskinfo.component';
+import { MetriclistComponent } from './metriclist/metriclist.component';
+import { PluginlistComponent } from './pluginlist/pluginlist.component';
 
 import { ServerlistService } from './shared/serverlist.service';
 import { SnapRestV2Service } from './shared/snap-rest-v2.service';
+import { Util } from './shared/util';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     ServerlistComponent,
     TasklistComponent,
     TaskinfoComponent,
-    ServereditComponent
+    ServereditComponent,
+    MetriclistComponent,
+    PluginlistComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,8 @@ import { SnapRestV2Service } from './shared/snap-rest-v2.service';
   ],
   providers: [
     ServerlistService,
-    SnapRestV2Service
+    SnapRestV2Service,
+    Util
   ],
   bootstrap: [AppComponent]
 })

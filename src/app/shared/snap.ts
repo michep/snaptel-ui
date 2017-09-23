@@ -13,8 +13,26 @@ export interface SnapTask {
 }
 
 export interface SnapTaskInfo extends SnapTask {
-  workflow: any;
-  schedule: any;
+  workflow: SnapTaskWorkflow;
+  schedule: SnapTaskSchedule;
+}
+
+interface SnapTaskSchedule {
+  type: string;
+  interval?: string;
+  count?: number;
+}
+
+interface SnapTaskWorkflow {
+  collect: SnapTaskWorkflowCollect;
+}
+
+interface SnapTaskWorkflowCollect {
+  metrics: any;
+  config?: any;
+  tags?: any;
+  process?: any;
+  publish?: any;
 }
 
 export interface SnapServer {
@@ -23,4 +41,22 @@ export interface SnapServer {
   port: number;
   proto: string;
   available?: boolean;
+}
+
+export interface SnapMetric {
+  last_advertised_timestamp: number;
+  namespace: string;
+  version: number;
+  dynamic: boolean;
+  href: string;
+}
+
+export interface SnapPlugin {
+  name: string;
+  version: number;
+  type: string;
+  signed: boolean;
+  status: string;
+  loaded_timestamp: number;
+  href: string;
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-import { ServerlistService} from '../shared/serverlist.service';
+import { ServerlistService } from '../shared/serverlist.service';
 import { SnapServer } from '../shared/snap';
 
 @Component({
@@ -13,30 +13,16 @@ import { SnapServer } from '../shared/snap';
 export class ServereditComponent implements OnInit {
 
   private form: FormGroup;
-  private servername: string;
   private state: string;
-  private server: SnapServer;
+  private server: SnapServer = <SnapServer>{};
   private oldserver: SnapServer;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private serversService: ServerlistService
+    private serversService: ServerlistService,
   ) {
-    this.server = <SnapServer>{};
-    const snapshot = activatedRoute.snapshot;
-    if (snapshot.url[snapshot.url.length - 1].path === 'new') {
-      this.state = 'new';
-    } else {
-      this.state = 'edit';
-      this.servername = activatedRoute.snapshot.params['servername'];
-      serversService.getServer(this.servername)
-      .subscribe(server => {
-        this.server = server;
-        this.oldserver = {proto: server.proto, host: server.host, port: server.port, key: server.key, available: null};
-      });
-    }
   }
 
   ngOnInit() {
@@ -45,6 +31,20 @@ export class ServereditComponent implements OnInit {
       hostname: '',
       port: ''
     });
+
+    const snapshot = this.activatedRoute.snapshot;
+    if (snapshot.url[snapshot.url.length - 1].path === 'new') {
+      this.state = 'new';
+    } else {
+      this.state = 'edit';
+      this.serversService.getServer(this.activatedRoute.snapshot.params['serverid'])
+        .subscribe(
+          (server) => {
+            this.server = server;
+            this.oldserver = {proto: server.proto, host: server.host, port: server.port, key: server.key, available: null};
+          }
+        );
+    }
   }
 
   private saveServer(server: SnapServer) {
