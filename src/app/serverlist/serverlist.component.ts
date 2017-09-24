@@ -8,6 +8,7 @@ import 'rxjs/add/operator/timeout';
 import { ServerlistService } from '../shared/serverlist.service';
 import { SnapRestV2Service } from '../shared/snap-rest-v2.service';
 import { SnapServer } from '../shared/snap';
+import { Util } from '../shared/util';
 
 @Component({
   selector: 'app-serverlist',
@@ -17,12 +18,14 @@ import { SnapServer } from '../shared/snap';
 export class ServerlistComponent implements OnInit {
 
   private servers: SnapServer[] = [];
+  private serversAvailCheck: Observable<any>;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private serverlistService: ServerlistService,
     private snapService: SnapRestV2Service,
+    private util: Util
   ) { }
 
   ngOnInit() {

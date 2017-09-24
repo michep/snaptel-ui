@@ -21,6 +21,7 @@ import { PluginlistComponent } from './pluginlist/pluginlist.component';
 import { ServerlistService } from './shared/serverlist.service';
 import { SnapRestV2Service } from './shared/snap-rest-v2.service';
 import { Util } from './shared/util';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { Util } from './shared/util';
     TaskinfoComponent,
     ServereditComponent,
     MetriclistComponent,
-    PluginlistComponent
+    PluginlistComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
