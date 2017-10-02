@@ -4,6 +4,8 @@
     <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'plugins']" [disabled]="!server.available">Plugins</button>
     <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'metrics']" [disabled]="!server.available">Metrics</button>
     <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'tasks']" [disabled]="!server.available">Tasks</button>
+  </div>
+  <div class="ml-4">
     <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'edit']">Edit</button>
     <button class="btn btn-danger btn-sm" (click)="deleteServer(server)">Remove</button>
   </div>
