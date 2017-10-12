@@ -1,9 +1,9 @@
 <div class="row p-2 align-items-center" *ngFor="let server of servers" [style.background-color]="server.available ? 'PaleGreen' : 'LightPink'">
   <div class="mr-auto">{{ util.getServerString(server) }}</div>
   <div class="ml-auto ">
-    <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'plugins']" [disabled]="!server.available">Plugins</button>
-    <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'metrics']" [disabled]="!server.available">Metrics</button>
-    <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'tasks']" [disabled]="!server.available">Tasks</button>
+    <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'plugins']" [disabled]="server.available == false">Plugins</button>
+    <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'metrics']" [disabled]="server.available == false">Metrics</button>
+    <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'tasks']" [disabled]="server.available == false">Tasks</button>
   </div>
   <div class="ml-4">
     <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'edit']">Edit</button>

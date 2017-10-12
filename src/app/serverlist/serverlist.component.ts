@@ -36,7 +36,6 @@ export class ServerlistComponent implements OnInit {
           Observable.from(this.servers)
             .map(item => {
               const server: SnapServer = <SnapServer>item;
-              server.key = item['$key'];
               this.snapService.getTaskList(server)
                 .timeout(250)
                 .subscribe(
