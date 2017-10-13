@@ -41,4 +41,17 @@ export class TaskinfoComponent implements OnInit {
       );
   }
 
+  stopTask(task: SnapTaskInfo) {
+    this.snapService.stopTask(this.server, task.id)
+      .subscribe(
+        () => task.task_state = 'Stopped'
+      );
+  }
+
+  startTask(task: SnapTaskInfo) {
+    this.snapService.startTask(this.server, task.id)
+      .subscribe(
+        () => task.task_state = 'Running'
+      );
+  }
 }

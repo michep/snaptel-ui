@@ -26,17 +26,30 @@ export class TasklistComponent implements OnInit {
 
   ngOnInit() {
     this.serversService.getServer(this.activatedRoute.snapshot.params['serverid'])
+    .subscribe(
+      (server) => {
+        this.server = server;
+        this.snapService.getTaskList(this.server)
+          .subscribe(
+            (res) => {
+              this.serverTasks = res.json()['tasks'];
+            }
+          );
+      }
+    );
+  }
+
+  stopTask(task: SnapTask) {
+    this.snapService.stopTask(this.server, task.id)
       .subscribe(
-        (server) => {
-          this.server = server;
-          this.snapService.getTaskList(this.server)
-            .subscribe(
-              (res) => {
-                this.serverTasks = res.json()['tasks'];
-              }
-            );
-        }
+        () => task.task_state = 'Stopped'
       );
   }
 
+  startTask(task: SnapTask) {
+    this.snapService.startTask(this.server, task.id)
+      .subscribe(
+        () => task.task_state = 'Running'
+      );
+  }
 }

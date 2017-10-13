@@ -8,6 +8,8 @@
       <th>Hit count</th>
       <th>Fail count</th>
       <th>Details</th>
+      <th>Start</th>
+      <th>Stop</th>
     </tr>
   </thead>
   <tbody>
@@ -16,9 +18,11 @@
       <td>{{ util.getDateString(task.creation_timestamp) }}</td>
       <td>{{ task.task_state }}</td>
       <td>{{ util.getDateString(task.last_run_timestamp) }}</td>
-      <td>{{ task.hit_count }}</td>
-      <td>{{ task.failed_count }}</td>
+      <td style="text-align: right">{{ task.hit_count }}</td>
+      <td style="text-align: right">{{ task.failed_count }}</td>
       <td><button class="btn btn-light btn-sm" [routerLink]="[task.id, 'info']">Details</button></td>
+      <td><button class="btn btn-light btn-sm" (click)="startTask(task)">Start</button></td>
+      <td><button class="btn btn-danger btn-sm" (click)="stopTask(task)">Stop</button></td>
     </tr>
   </tbody>
 </table>
