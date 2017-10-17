@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/timeout';
 
 import { ServerlistService } from '../shared/serverlist.service';
@@ -15,10 +18,12 @@ import { Util } from '../shared/util';
   templateUrl: './serverlist.component.html',
   styleUrls: ['./serverlist.component.css']
 })
-export class ServerlistComponent implements OnInit {
+export class ServerlistComponent implements OnInit, OnDestroy {
 
   private servers: SnapServer[] = [];
   private serversAvailCheck: Observable<any>;
+  private refreshTimer: Subscription;
+  private serversAvailCheckTimer: Subscription;
 
   constructor(
     private router: Router,
@@ -29,33 +34,46 @@ export class ServerlistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.serverlistService.getServerList()
-      .subscribe(
-        (servers) => {
-          this.servers = servers;
-          Observable.from(this.servers)
-            .map(item => {
-              const server: SnapServer = item;
-              this.snapService.getTaskList(server)
-                .timeout(250)
-                .subscribe(
-                  (res) => {
-                    server.available = true;
-                  },
-                  (err) => {
-                    server.available = false;
-                  }
-                );
-              return server;
-            })
-            .subscribe();
-        }
-      );
+    this.updateServerList();
+  }
+
+  ngOnDestroy() {
+    this.serversAvailCheckTimer.unsubscribe();
   }
 
   private deleteServer(server: SnapServer) {
     if (confirm('Remove this server, really?')) {
       this.serverlistService.removeServer(server);
+    }
+  }
+
+  private updateServerList() {
+    this.serverlistService.getServerList()
+    .subscribe(
+      (servers) => {
+        this.servers = servers;
+        this.serversAvailCheckTimer = Observable.timer(0, 5000)
+          .subscribe(
+            () => {
+              this.checkAvail();
+            }
+          );
+      }
+    );
+  }
+
+  private checkAvail() {
+    for (const server of this.servers) {
+      this.snapService.getTaskList(server)
+        .timeout(500)
+        .subscribe(
+          (res) => {
+            server.available = true;
+          },
+          (err) => {
+            server.available = false;
+          }
+        );
     }
   }
 
