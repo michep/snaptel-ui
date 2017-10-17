@@ -33,7 +33,7 @@ export class MetriclistComponent implements OnInit {
           this.snapService.getMetricList(this.server)
             .subscribe(
               (res) => {
-                this.serverMetrics = res.json()['metrics'];
+                this.serverMetrics = res;
               }
             );
         }

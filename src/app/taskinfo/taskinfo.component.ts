@@ -33,7 +33,7 @@ export class TaskinfoComponent implements OnInit {
           this.snapService.getTaskInfo(server, this.activatedRoute.snapshot.params['taskid'])
             .subscribe(
               (res) => {
-                this.taskInfo = res.json();
+                this.taskInfo = res;
                 this.metrics = Object.keys(this.taskInfo.workflow.collect.metrics);
               }
             );
@@ -54,4 +54,5 @@ export class TaskinfoComponent implements OnInit {
         () => task.task_state = 'Running'
       );
   }
+
 }

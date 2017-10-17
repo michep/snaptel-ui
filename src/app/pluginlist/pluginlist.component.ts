@@ -32,7 +32,7 @@ export class PluginlistComponent implements OnInit {
           this.snapService.getPluginList(this.server)
             .subscribe(
               (res) => {
-                this.serverPlugins = res.json()['plugins'];
+                this.serverPlugins = res;
               }
             );
         }
