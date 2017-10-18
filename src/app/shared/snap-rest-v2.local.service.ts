@@ -17,16 +17,20 @@ export class SnapLocalService implements ISnapService {
 
   getTaskList(server: SnapServer): Observable<SnapTask[]> {
     return this.http.get(this.localServerApi + 'tasks/' + encodeURIComponent(this.util.getServerString(server)))
-      .map(data => {
-        return data.json()['tasks'] as SnapTask[];
-      });
+      .map(
+        data => {
+          return data.json()['tasks'] as SnapTask[];
+        }
+      );
   }
 
   getTaskInfo(server: SnapServer, taskid: string): Observable<SnapTaskInfo> {
     return this.http.get(this.localServerApi + 'tasks/' + encodeURIComponent(this.util.getServerString(server)) + '/' + taskid)
-      .map(data => {
-        return data.json() as SnapTaskInfo;
-      });
+      .map(
+        data => {
+          return data.json() as SnapTaskInfo;
+        }
+      );
   }
 
   stopTask(server: SnapServer, taskid: string): Observable<string> {
@@ -38,11 +42,21 @@ export class SnapLocalService implements ISnapService {
   }
 
   getMetricList(server: SnapServer): Observable<SnapMetric[]> {
-    return;
+    return this.http.get(this.localServerApi + 'metrics/' + encodeURIComponent(this.util.getServerString(server)))
+    .map(
+        (data) => {
+          return data.json()['metrics'] as SnapMetric[];
+        }
+      );
   }
 
   getPluginList(server: SnapServer): Observable<SnapPlugin[]> {
-    return;
+    return this.http.get(this.localServerApi + 'plugins/' + encodeURIComponent(this.util.getServerString(server)))
+      .map(
+        (data) => {
+          return data.json()['plugins'] as SnapPlugin[];
+        }
+      );
   }
 
 }

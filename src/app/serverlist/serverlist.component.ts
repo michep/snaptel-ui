@@ -4,9 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/timer';
-import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/mergemap';
 
 import { SnapServer, IServerlistService, ISnapService } from '../shared/snap';
 import { Util } from '../shared/util';
@@ -19,8 +18,6 @@ import { Util } from '../shared/util';
 export class ServerlistComponent implements OnInit, OnDestroy {
 
   private servers: SnapServer[] = [];
-  private serversAvailCheck: Observable<any>;
-  private refreshTimer: Subscription;
   private serversAvailCheckTimer: Subscription;
 
   constructor(
@@ -51,34 +48,34 @@ export class ServerlistComponent implements OnInit, OnDestroy {
       (servers) => {
         this.servers = servers;
         this.serversAvailCheckTimer = Observable.timer(0, 5000)
-          .subscribe(
+          .mergeMap(
             () => {
-              this.checkAvailTrue();
+              return Observable.from(this.servers);
+            }
+          )
+          .subscribe(
+            (server) => {
+              this.checkAvail(server);
             }
           );
       }
     );
   }
 
-  private checkAvail() {
-    for (const server of this.servers) {
-      this.snapService.getTaskList(server)
-        .timeout(500)
-        .subscribe(
-          (res) => {
-            server.available = true;
-          },
-          (err) => {
-            server.available = false;
-          }
-        );
-    }
+  private checkAvail(server: SnapServer) {
+    this.snapService.getPluginList(server)
+      .subscribe(
+        (res) => {
+          server.available = true;
+        },
+        (err) => {
+          server.available = false;
+        },
+      );
   }
 
-  private checkAvailTrue() {
-    for (const server of this.servers) {
-      server.available = true;
-    }
+  private checkAvailTrue(server: SnapServer) {
+    server.available = true;
   }
 
 }
