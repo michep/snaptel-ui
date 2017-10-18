@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+
 export interface SnapTask {
   id: string;
   name: string;
@@ -59,4 +61,22 @@ export interface SnapPlugin {
   status: string;
   loaded_timestamp: number;
   href: string;
+}
+
+
+export interface ISnapService {
+  getTaskList(server: SnapServer): Observable<SnapTask[]>;
+  getTaskInfo(server: SnapServer, taskid: string): Observable<SnapTaskInfo>;
+  stopTask(server: SnapServer, taskid: string): Observable<string>;
+  startTask(server: SnapServer, taskid: string): Observable<string>;
+  getMetricList(server: SnapServer): Observable<SnapMetric[]>;
+  getPluginList(server: SnapServer): Observable<SnapPlugin[]>;
+}
+
+export interface IServerlistService {
+  newServer(server: SnapServer);
+  updateServer(oldserver, server: SnapServer);
+  removeServer(server: SnapServer);
+  getServer(key: string): Observable<SnapServer>;
+  getServerList(): Observable<SnapServer[]>;
 }

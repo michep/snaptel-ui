@@ -6,11 +6,11 @@ import 'rxjs/add/operator/map';
 
 import { UUID } from 'angular2-uuid';
 
-import { SnapServer } from '../shared/snap';
+import { SnapServer, IServerlistService } from '../shared/snap';
 
 
 @Injectable()
-export class ServerlistService {
+export class ServerlistService implements IServerlistService {
   private snapServersKey = 'snaptel_servers';
 
   constructor(private db: AngularFireDatabase) {

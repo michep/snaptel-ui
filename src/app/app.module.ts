@@ -17,11 +17,14 @@ import { TasklistComponent } from './tasklist/tasklist.component';
 import { TaskinfoComponent } from './taskinfo/taskinfo.component';
 import { MetriclistComponent } from './metriclist/metriclist.component';
 import { PluginlistComponent } from './pluginlist/pluginlist.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 import { ServerlistService } from './shared/serverlist.service';
+import { ServerlistLocalService } from './shared/serverlist.local.service';
 import { SnapRestV2Service } from './shared/snap-rest-v2.service';
+import { SnapLocalService } from './shared/snap-rest-v2.local.service';
 import { Util } from './shared/util';
-import { NavbarComponent } from './navbar/navbar.component';
+import { IServerlistService, ISnapService } from './shared/snap';
 
 @NgModule({
   declarations: [
@@ -44,8 +47,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     AppRoutingModule
   ],
   providers: [
-    ServerlistService,
-    SnapRestV2Service,
+    { provide: 'ISnapService', useClass: SnapLocalService },
+    { provide: 'IServerlistService', useClass: ServerlistLocalService },
     Util
   ],
   bootstrap: [AppComponent]

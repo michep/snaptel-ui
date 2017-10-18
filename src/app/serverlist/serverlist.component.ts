@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
@@ -8,9 +8,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/timeout';
 
-import { ServerlistService } from '../shared/serverlist.service';
-import { SnapRestV2Service } from '../shared/snap-rest-v2.service';
-import { SnapServer } from '../shared/snap';
+import { SnapServer, IServerlistService, ISnapService } from '../shared/snap';
 import { Util } from '../shared/util';
 
 @Component({
@@ -28,8 +26,8 @@ export class ServerlistComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private serverlistService: ServerlistService,
-    private snapService: SnapRestV2Service,
+    @Inject('ISnapService') private snapService: ISnapService,
+    @Inject('IServerlistService') private serversService: IServerlistService,
     private util: Util
   ) { }
 
@@ -43,19 +41,19 @@ export class ServerlistComponent implements OnInit, OnDestroy {
 
   private deleteServer(server: SnapServer) {
     if (confirm('Remove this server, really?')) {
-      this.serverlistService.removeServer(server);
+      this.serversService.removeServer(server);
     }
   }
 
   private updateServerList() {
-    this.serverlistService.getServerList()
+    this.serversService.getServerList()
     .subscribe(
       (servers) => {
         this.servers = servers;
         this.serversAvailCheckTimer = Observable.timer(0, 5000)
           .subscribe(
             () => {
-              this.checkAvail();
+              this.checkAvailTrue();
             }
           );
       }
@@ -74,6 +72,12 @@ export class ServerlistComponent implements OnInit, OnDestroy {
             server.available = false;
           }
         );
+    }
+  }
+
+  private checkAvailTrue() {
+    for (const server of this.servers) {
+      server.available = true;
     }
   }
 

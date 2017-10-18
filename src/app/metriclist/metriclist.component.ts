@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { SnapRestV2Service } from '../shared/snap-rest-v2.service';
-import { ServerlistService } from '../shared/serverlist.service';
 import { Util } from '../shared/util';
-import { SnapServer, SnapMetric } from '../shared/snap';
+import { SnapServer, SnapMetric, IServerlistService, ISnapService } from '../shared/snap';
 
 @Component({
   selector: 'app-metriclist',
@@ -20,8 +18,8 @@ export class MetriclistComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private snapService: SnapRestV2Service,
-    private serversService: ServerlistService,
+    @Inject('ISnapService') private snapService: ISnapService,
+    @Inject('IServerlistService') private serversService: IServerlistService,
     private util: Util
   ) { }
 

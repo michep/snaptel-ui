@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Util } from './util';
 
-import { SnapServer, SnapTask, SnapTaskInfo, SnapMetric, SnapPlugin } from './snap';
+import { SnapServer, SnapTask, SnapTaskInfo, SnapMetric, SnapPlugin, ISnapService } from './snap';
 
 @Injectable()
-export class SnapRestV2Service {
+export class SnapRestV2Service implements ISnapService {
 
   private apiver = '/v2/';
 

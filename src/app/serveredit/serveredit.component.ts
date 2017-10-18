@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-import { ServerlistService } from '../shared/serverlist.service';
-import { SnapServer } from '../shared/snap';
+import { SnapServer, IServerlistService } from '../shared/snap';
 
 @Component({
   selector: 'app-serveredit',
@@ -21,7 +20,7 @@ export class ServereditComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private serversService: ServerlistService,
+    @Inject('IServerlistService') private serversService: IServerlistService,
   ) {
   }
 
