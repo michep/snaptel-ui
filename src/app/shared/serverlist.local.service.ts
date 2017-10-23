@@ -14,8 +14,8 @@ import { SnapServer, IServerlistService } from '../shared/snap';
 @Injectable()
 export class ServerlistLocalService implements IServerlistService {
 
-  // private localServerApi = 'http://bux.mfms:4040/serversapi/';
-  private localServerApi = 'http://localhost:3000/serversapi/';
+  private localServerApi = 'http://bux.mfms:4040/serversapi/';
+  // private localServerApi = 'http://localhost:3000/serversapi/';
 
   constructor(private http: Http, private util: Util) {
   }

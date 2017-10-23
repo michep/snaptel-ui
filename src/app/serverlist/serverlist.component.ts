@@ -50,22 +50,22 @@ export class ServerlistComponent implements OnInit, OnDestroy {
     }
 
     this.serversService.getServerList()
-    .subscribe(
-      (servers) => {
-        this.servers = servers;
-        // this.serversAvailCheckTimer = Observable.timer(0, 10000)
-        this.serversAvailCheckTimer = Observable.of({})
-          .mergeMap(
-            () => {
-              return Observable.from(this.servers);
-            }
-          )
-          .subscribe(
-            (server) => {
-              this.checkAvail(server);
-            }
-          );
-      }
+      .subscribe(
+        (servers) => {
+          this.servers = servers;
+          // this.serversAvailCheckTimer = Observable.timer(0, 10000)
+          this.serversAvailCheckTimer = Observable.of({})
+            .mergeMap(
+              () => {
+                return Observable.from(this.servers);
+              }
+            )
+            .subscribe(
+              (server) => {
+                this.checkAvail(server);
+              }
+            );
+        }
     );
   }
 

@@ -1,5 +1,5 @@
 <div class="row p-2 align-items-center" *ngFor="let server of servers" [style.background-color]="server.available ? 'PaleGreen' : 'LightPink'">
-  <div class="mr-auto">{{ util.getServerString(server) }}</div>
+  <div class="mr-auto">{{ server.host }}</div>
   <div class="ml-auto ">
     <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'plugins']" [disabled]="server.available == false">Plugins</button>
     <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'metrics']" [disabled]="server.available == false">Metrics</button>

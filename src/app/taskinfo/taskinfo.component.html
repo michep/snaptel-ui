@@ -1,3 +1,4 @@
+<h2>{{ server.host }}</h2>
 <div class="col-12">
   <table class="table">
     <tr>
@@ -51,6 +52,10 @@
     <tr>
       <td>Last failure message</td>
       <td>{{ taskInfo.last_failure_message }}</td>
+    </tr>
+    <tr>
+      <td>Workflow</td>
+      <td><pre>{{ taskInfo.workflow | json }}</pre></td>
     </tr>
   </table>
   <button class="btn btn-light btn-sm" (click)="startTask(taskInfo)">Start</button>
