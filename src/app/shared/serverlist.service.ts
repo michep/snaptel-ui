@@ -3,6 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/fromPromise';
 
 import { UUID } from 'angular2-uuid';
 
@@ -16,26 +17,29 @@ export class ServerlistService implements IServerlistService {
   constructor(private db: AngularFireDatabase) {
   }
 
-  newServer(server: SnapServer) {
+  newServer(server: SnapServer): Observable<any> {
     server.key = UUID.UUID();
-    this.db.object(this.snapServersKey + '/' + server.key)
-    .set(
-      {proto: server.proto, host: server.host, port: server.port, key: server.key}
-    );
-  }
-
-  updateServer(oldserver, server: SnapServer) {
-    this.db.object(this.snapServersKey + '/' + oldserver.key)
-    .remove()
-    .then(_ => this.db.object(this.snapServersKey + '/' + server.key)
+    return Observable.fromPromise(
+      this.db.object(this.snapServersKey + '/' + server.key)
       .set(
         {proto: server.proto, host: server.host, port: server.port, key: server.key}
       )
     );
   }
 
-  removeServer(server: SnapServer) {
-    this.db.object(this.snapServersKey + '/' + server.key).remove();
+  updateServer(server: SnapServer): Observable<any>  {
+    return Observable.fromPromise(
+      this.db.object(this.snapServersKey + '/' + server.key)
+      .set(
+        {proto: server.proto, host: server.host, port: server.port, key: server.key}
+      )
+    );
+  }
+
+  removeServer(server: SnapServer): Observable<any>  {
+    return Observable.fromPromise(
+      this.db.object(this.snapServersKey + '/' + server.key).remove()
+    );
   }
 
   getServer(key: string): Observable<SnapServer> {
