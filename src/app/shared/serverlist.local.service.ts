@@ -51,9 +51,22 @@ export class ServerlistLocalService implements IServerlistService {
         for (const k of Object.keys(d)) {
           servers.push(d[k] as SnapServer);
         }
+        servers.sort(this.compareSnapServers);
         return servers;
       }
     );
   }
 
+  private compareSnapServers(a: SnapServer, b: SnapServer): number {
+    if (a.host === b.host) {
+      return 0;
+    }
+    if (a.host < b.host) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
 }
+
