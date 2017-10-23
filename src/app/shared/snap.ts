@@ -75,7 +75,7 @@ export interface ISnapService {
 
 export interface IServerlistService {
   newServer(server: SnapServer);
-  updateServer(oldserver, server: SnapServer);
+  updateServer(server: SnapServer);
   removeServer(server: SnapServer);
   getServer(key: string): Observable<SnapServer>;
   getServerList(): Observable<SnapServer[]>;

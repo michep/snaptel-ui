@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 import { UUID } from 'angular2-uuid';
 
@@ -13,18 +14,23 @@ import { SnapServer, IServerlistService } from '../shared/snap';
 @Injectable()
 export class ServerlistLocalService implements IServerlistService {
 
-  private localServerApi = 'http://localhost:3000/servers/';
+  // private localServerApi = 'http://bux.mfms:4040/serversapi/';
+  private localServerApi = 'http://localhost:3000/serversapi/';
 
   constructor(private http: Http, private util: Util) {
   }
 
-  newServer(server: SnapServer) {
+  newServer(server: SnapServer): Observable<any> {
+    server.key = UUID.UUID();
+    return this.http.post(this.localServerApi, server);
   }
 
-  updateServer(oldserver, server: SnapServer) {
+  updateServer(server: SnapServer): Observable<any> {
+    return this.http.put(this.localServerApi + server.key, server);
   }
 
-  removeServer(server: SnapServer) {
+  removeServer(server: SnapServer): Observable<any> {
+    return this.http.delete(this.localServerApi + server.key);
   }
 
   getServer(key: string): Observable<SnapServer> {

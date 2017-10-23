@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/mergemap';
 
@@ -38,16 +39,22 @@ export class ServerlistComponent implements OnInit, OnDestroy {
 
   private deleteServer(server: SnapServer) {
     if (confirm('Remove this server, really?')) {
-      this.serversService.removeServer(server);
+      this.serversService.removeServer(server)
+        .subscribe(() => this.updateServerList());
     }
   }
 
   private updateServerList() {
+    if (this.serversAvailCheckTimer !== undefined) {
+      this.serversAvailCheckTimer.unsubscribe();
+    }
+
     this.serversService.getServerList()
     .subscribe(
       (servers) => {
         this.servers = servers;
-        this.serversAvailCheckTimer = Observable.timer(0, 5000)
+        // this.serversAvailCheckTimer = Observable.timer(0, 10000)
+        this.serversAvailCheckTimer = Observable.of({})
           .mergeMap(
             () => {
               return Observable.from(this.servers);

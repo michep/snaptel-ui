@@ -10,6 +10,7 @@ import { SnapServer, SnapTask, SnapTaskInfo, SnapMetric, SnapPlugin, ISnapServic
 @Injectable()
 export class SnapLocalService implements ISnapService {
 
+  // private localServerApi = 'http://bux.mfms:4040/snapapi/';
   private localServerApi = 'http://localhost:3000/snapapi/';
 
   constructor(private http: Http, private util: Util) {

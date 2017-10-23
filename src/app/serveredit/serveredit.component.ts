@@ -14,7 +14,6 @@ export class ServereditComponent implements OnInit {
   private form: FormGroup;
   private state: string;
   private server: SnapServer = <SnapServer>{};
-  private oldserver: SnapServer;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,19 +39,20 @@ export class ServereditComponent implements OnInit {
         .subscribe(
           (server) => {
             this.server = server;
-            this.oldserver = {proto: server.proto, host: server.host, port: server.port, key: server.key, available: null};
+            this.server.key = server.key;
           }
         );
     }
   }
 
   private saveServer(server: SnapServer) {
+    let s;
     if (this.state === 'new') {
-      this.serversService.newServer(server);
+      s = this.serversService.newServer(server);
     } else {
-      this.serversService.updateServer(this.oldserver, server);
+      s = this.serversService.updateServer(server);
     }
-    this.router.navigate(['servers']);
+    s.subscribe(() => this.router.navigate(['servers']));
   }
 
 }
