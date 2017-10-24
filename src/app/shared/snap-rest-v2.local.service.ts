@@ -39,12 +39,24 @@ export class SnapLocalService implements ISnapService {
   }
 
   stopTask(server: SnapServer, taskid: string): Observable<string> {
-    return;
+    return this.http.put(this.localServerApi + 'tasks/' + encodeURIComponent(this.util.getServerString(server)) + '/' + taskid + '?action=stop', null)
+      .timeout(500)
+      .map(
+        data => {
+          return data.text();
+        }
+      );
   }
 
   startTask(server: SnapServer, taskid: string): Observable<string> {
-    return;
-  }
+    return this.http.put(this.localServerApi + 'tasks/' + encodeURIComponent(this.util.getServerString(server)) + '/' + taskid + '?action=start', null)
+    .timeout(2000)
+    .map(
+      data => {
+        return data.text();
+      }
+    );
+}
 
   getMetricList(server: SnapServer): Observable<SnapMetric[]> {
     return this.http.get(this.localServerApi + 'metrics/' + encodeURIComponent(this.util.getServerString(server)))
