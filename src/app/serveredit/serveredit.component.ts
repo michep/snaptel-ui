@@ -33,6 +33,8 @@ export class ServereditComponent implements OnInit {
     const snapshot = this.activatedRoute.snapshot;
     if (snapshot.url[snapshot.url.length - 1].path === 'new') {
       this.state = 'new';
+      this.server.proto = 'http';
+      this.server.port = 8181;
     } else {
       this.state = 'edit';
       this.serversService.getServer(this.activatedRoute.snapshot.params['serverid'])
