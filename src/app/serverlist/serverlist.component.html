@@ -1,4 +1,5 @@
-<div class="row p-2 align-items-center" *ngFor="let server of servers" [style.background-color]="server.available ? 'PaleGreen' : 'LightPink'">
+<h2>Snap Servers List</h2>
+<div class="row p-2 align-items-center" *ngFor="let server of servers" [style.background-color]="server.available == undefined || server.available ? 'inherit' : 'LightPink'">
   <div class="mr-auto">{{ server.host }}</div>
   <div class="ml-auto ">
     <button class="btn btn-light btn-sm" [routerLink]="[server.key, 'plugins']" [disabled]="server.available == false">Plugins</button>

@@ -6,15 +6,15 @@
       <th>Created</th>
       <th>State</th>
       <th>Last run time</th>
-      <th>Hit count</th>
-      <th>Fail count</th>
+      <th style="text-align: right">Hit count</th>
+      <th style="text-align: right">Fail count</th>
       <th>Details</th>
       <th>Start</th>
       <th>Stop</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let task of serverTasks">
+    <tr *ngFor="let task of serverTasks" [style.background-color]="(task.hit_count - task.failed_count) == 0 ? 'LightPink' : 'inherit'">
       <td>{{ task.id }}</td>
       <td>{{ util.getDateString(task.creation_timestamp) }}</td>
       <td>{{ task.task_state }}</td>
