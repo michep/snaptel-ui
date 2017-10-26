@@ -11,16 +11,15 @@ import { SnapServer, SnapMetric, IServerlistService, ISnapService } from '../sha
 })
 export class MetriclistComponent implements OnInit {
 
-  private server: SnapServer = <SnapServer>{};
-  private serverMetrics: SnapMetric[] = [];
-
+  public server: SnapServer = <SnapServer>{};
+  public serverMetrics: SnapMetric[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     @Inject('ISnapService') private snapService: ISnapService,
     @Inject('IServerlistService') private serversService: IServerlistService,
-    private util: Util
+    public util: Util
   ) { }
 
   ngOnInit() {

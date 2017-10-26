@@ -11,9 +11,9 @@ import { SnapServer, IServerlistService } from '../shared/snap';
 })
 export class ServereditComponent implements OnInit {
 
-  private form: FormGroup;
+  public form: FormGroup;
+  public server: SnapServer = <SnapServer>{};
   private state: string;
-  private server: SnapServer = <SnapServer>{};
 
   constructor(
     private activatedRoute: ActivatedRoute,

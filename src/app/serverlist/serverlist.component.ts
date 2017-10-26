@@ -18,7 +18,7 @@ import { Util } from '../shared/util';
 })
 export class ServerlistComponent implements OnInit, OnDestroy {
 
-  private servers: SnapServer[] = [];
+  public servers: SnapServer[] = [];
   private serversAvailCheckTimer: Subscription;
 
   constructor(

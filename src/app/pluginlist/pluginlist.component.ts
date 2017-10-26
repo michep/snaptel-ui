@@ -11,15 +11,15 @@ import { SnapServer, SnapPlugin, IServerlistService, ISnapService } from '../sha
 })
 export class PluginlistComponent implements OnInit {
 
-  private server: SnapServer = <SnapServer>{};
-  private serverPlugins: SnapPlugin[] = [];
+  public server: SnapServer = <SnapServer>{};
+  public serverPlugins: SnapPlugin[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     @Inject('ISnapService') private snapService: ISnapService,
     @Inject('IServerlistService') private serversService: IServerlistService,
-    private util: Util
+    public util: Util
   ) { }
 
   ngOnInit() {

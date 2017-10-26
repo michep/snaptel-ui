@@ -11,15 +11,15 @@ import { SnapServer, SnapTask, IServerlistService, ISnapService } from '../share
 })
 export class TasklistComponent implements OnInit {
 
-  private server: SnapServer = <SnapServer>{};
-  private serverTasks: SnapTask[] = [];
+  public server: SnapServer = <SnapServer>{};
+  public serverTasks: SnapTask[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     @Inject('ISnapService') private snapService: ISnapService,
     @Inject('IServerlistService') private serversService: IServerlistService,
-    private util: Util
+    public util: Util
   ) { }
 
   ngOnInit() {

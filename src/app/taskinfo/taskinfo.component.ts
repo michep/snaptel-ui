@@ -11,16 +11,16 @@ import { SnapServer, SnapTaskInfo, IServerlistService, ISnapService } from '../s
 })
 export class TaskinfoComponent implements OnInit {
 
-  private server: SnapServer = <SnapServer>{};
-  private taskInfo: SnapTaskInfo = <SnapTaskInfo>{};
-  private metrics: string[] = [];
+  public server: SnapServer = <SnapServer>{};
+  public taskInfo: SnapTaskInfo = <SnapTaskInfo>{};
+  public metrics: string[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     @Inject('ISnapService') private snapService: ISnapService,
     @Inject('IServerlistService') private serversService: IServerlistService,
-    private util: Util
+    public util: Util
   ) { }
 
   ngOnInit() {
