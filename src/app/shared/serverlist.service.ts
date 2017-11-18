@@ -53,7 +53,11 @@ export class ServerlistService implements IServerlistService {
 
   getServerList(): Observable<SnapServer[]> {
     return this.db.list(this.snapServersKey)
-      .valueChanges();
+      .valueChanges()
+      .map(item => {
+        const servers: SnapServer[] = <SnapServer[]>item;
+        return servers;
+      });
   }
 
 }

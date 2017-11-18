@@ -47,7 +47,7 @@ export class ServereditComponent implements OnInit {
     }
   }
 
-  private saveServer(server: SnapServer) {
+  public saveServer(server: SnapServer) {
     let s;
     if (this.state === 'new') {
       s = this.serversService.newServer(server);

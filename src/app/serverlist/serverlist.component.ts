@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/timer';
-import 'rxjs/add/operator/mergemap';
+import 'rxjs/add/operator/mergeMap';
 
 import { SnapServer, IServerlistService, ISnapService } from '../shared/snap';
 import { Util } from '../shared/util';
